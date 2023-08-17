@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Panel</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 24px;
+    }
+
+    input {
+      margin-bottom: 24px;
+    }
+
+    input[type="file"], input[type="file"] {
+      margin-left: 8px;
+    }
+
+    .output {
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <h1>Admin Panel</h1>
+  <p><a href="/logout"><button>Log out</button></a></p><br>
+  <form id="upload-form" action="/upload" method="post" enctype="multipart/form-data">
+    Datum: <input type="date" name="date" required><br>
+    Datei: <input type="file" name="file" accept=".html" required><br>
+    <input type="submit" value="Upload">
+  </form>
+  <span class="output"></span>
+  <script>
+const form = document.getElementById('upload-form');
+form.addEventListener('submit', function (event) {
+  event.preventDefault();
+  const formData = new FormData(form);
+  fetch('/upload', {
+    method: 'POST',
+    body: formData
+  })
+  .then(response => response.json())
+  .then(data => {
+    // Handle the response from the server, e.g., show success message
+    console.log(data);
+    document.querySelector(".output").textContent = Object.values(data)[0];
+  })
+  .catch(error => {
+    // Handle errors, e.g., show error message
+    console.error(error);
+    document.querySelector(".output").textContent = error.toString();
+  });
+});
+  </script>
+</body>
+</html>

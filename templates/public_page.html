@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Substi</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 0px;
+    }
+
+    h1 {
+      padding-left:w 24px;
+    }
+
+    .days-container {
+      display: flex;
+      flex-wrap: wrap; /* Allow the days to wrap to the next line if the window width is narrow */
+      gap: 24px; /* Gap between the days */
+      justify-content: space-between; /* Distribute the days evenly across the container */
+      padding: 24px;
+    }
+
+    .day {
+      flex: 1; /* Make each day container take equal width */
+      width: fit-content;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-bottom: 24px;
+    }
+
+    th, td {
+      border: 1px solid black;
+      padding: 8px;
+    }
+
+    td {
+      text-align: left;
+    }
+
+    th {
+      background-color: #f2f2f2;
+      text-align: left;
+      font-weight: bold;
+    }
+
+    th#info_table {
+      text-align: center;
+    }
+
+  </style>
+</head>
+<body>
+  <h1>Vertretungsplan</h1>
+
+  {% if plans %}
+    <div class="days-container">
+      {% for plan in plans %}
+        <div class="day">
+          <h3>{{ plan.date }}</h3>
+          {{ plan.html | safe }}
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p>No substitution plans available.</p>
+  {% endif %}
+
+</body>
+</html>
